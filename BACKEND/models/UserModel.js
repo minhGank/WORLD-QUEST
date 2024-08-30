@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
   {
+    img: {
+      type: String,
+      required: true,
+      default:
+        "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
+    },
     username: {
       type: String,
       required: true,
@@ -9,7 +15,6 @@ const userSchema = mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
     },
     password: {
       type: String,
@@ -39,6 +44,10 @@ const userSchema = mongoose.Schema(
     fromGoogle: {
       type: Boolean,
       default: false,
+    },
+    birthDay: {
+      type: Date,
+      default: null,
     },
   },
   { timestamps: true }
