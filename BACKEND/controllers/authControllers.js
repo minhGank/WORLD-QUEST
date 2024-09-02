@@ -6,7 +6,6 @@ const { generateFromEmail } = require("unique-username-generator");
 
 const inputValidation = (email, password) => {
   if (!email || !password) {
-    console.log(email, password);
     return { success: false, msg: "Email or Password is missing" };
   }
   const emailValidatorCheck = validator.validate(email);
