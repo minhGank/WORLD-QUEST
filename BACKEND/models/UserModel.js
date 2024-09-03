@@ -42,8 +42,11 @@ const userSchema = mongoose.Schema(
       },
     ],
     fromGoogle: {
-      type: Boolean,
-      default: false,
+      googleAuth: { type: Boolean, default: false },
+      uid: {
+        type: String,
+        default: null,
+      },
     },
     birthDay: {
       type: Date,
