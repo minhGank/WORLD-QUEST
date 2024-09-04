@@ -12,6 +12,7 @@ import {
 } from "../../utilities/firebase";
 import { signInWithPopup } from "firebase/auth";
 
+//end of import
 const Login = () => {
   const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState(false);
@@ -46,18 +47,39 @@ const Login = () => {
 
   //function for submit the form
   const formSubmit = async (e) => {
-    e.preventDefault();
-    const validationResult = inputValidation(input.email, input.password);
-    if (validationResult == true) {
-      const res = await axios.post(`http://localhost:8000/auth/login`, {
-        email: input.email,
-        password: input.password,
-      });
-      if (res.data.success == false) {
-        return toastFunction("error", res.data.msg);
-      } else {
-        navigate("/");
+    try {
+      e.preventDefault();
+      const validationResult = inputValidation(input.email, input.password);
+      if (validationResult == true) {
+        //submit sign in form
+        if (!showSignUp) {
+          const res = await axios.post(`http://localhost:8000/auth/login`, {
+            email: input.email,
+            password: input.password,
+          });
+          //there're errors
+          if (res.data.success == false) {
+            return toastFunction("error", res.data.msg);
+          }
+          //form sign in submit success
+          if (res.data.success) {
+            navigate("/");
+          }
+        } else {
+          //submit sign up form
+          const res = await axios.post(`http://localhost:8000/auth/signup`, {
+            email: input.email,
+            password: input.password,
+          });
+          if (res.data.success == false) {
+            return toastFunction("error", res.data.msg);
+          } else {
+            showSignUp(false);
+          }
+        }
       }
+    } catch (error) {
+      toastFunction("error", error);
     }
   };
 
@@ -83,88 +105,127 @@ const Login = () => {
       <Container>
         {!showSignUp ? (
           <FormContainer>
-            <div className="div_for_traditional_signin">
-              <p>Welcome to Word Quest</p>
-              <h1>Sign In</h1>
-              <div className="div_for_signin_input">
-                <form onSubmit={formSubmit}>
-                  <Fieldset>
-                    <legend>Email</legend>
-                    <input
-                      type="text"
-                      name="email"
-                      value={input.email}
-                      placeholder="example@gmail.com"
-                      onChange={(e) => {
-                        inputOnChangeFunction(e, "email");
-                      }}
-                    />
-                  </Fieldset>
-                  <Fieldset>
-                    <legend>Password</legend>
-                    <input
-                      type="password"
-                      value={input.password}
-                      placeholder="********"
-                      onChange={(event) => {
-                        inputOnChangeFunction(event, "password");
-                      }}
-                    />
-                  </Fieldset>
-                  <Button className="formSubmitButton" type="submit">
-                    Sign In
-                  </Button>
-                </form>
+            <div className="div_for_auth">
+              <div className="intro_div">
+                <p>Welcome to Word Quest</p>
+                <h1>Sign In</h1>
               </div>
-            </div>
-            <ConnectionContainer>
-              <hr></hr> <span> or sign in with </span>
-              <hr></hr>
-            </ConnectionContainer>
-            <div className="div_for_modern_sign_in">
-              <button onClick={signInWithGoogle}>Sign in with Google</button>
+              <div className="div_for_form">
+                <div className="div_for_signin_input">
+                  <form onSubmit={formSubmit}>
+                    <Fieldset>
+                      <legend>Email</legend>
+                      <input
+                        type="text"
+                        name="email"
+                        value={input.email}
+                        placeholder="example@gmail.com"
+                        onChange={(e) => {
+                          inputOnChangeFunction(e, "email");
+                        }}
+                      />
+                    </Fieldset>
+                    <Fieldset>
+                      <legend>Password</legend>
+                      <input
+                        type="password"
+                        value={input.password}
+                        placeholder="********"
+                        onChange={(event) => {
+                          inputOnChangeFunction(event, "password");
+                        }}
+                      />
+                    </Fieldset>
+                    <Button type="submit">Sign In</Button>
+                  </form>
+                </div>
+                <ConnectionContainer>
+                  <hr></hr> <span> or sign in with </span>
+                  <hr></hr>
+                </ConnectionContainer>
+
+                <ModernSignInContainer>
+                  <button type="light" onClick={signInWithGoogle}>
+                    <img src="../public/Icons/google_logo.svg" />
+                    <span>Google</span>
+                  </button>
+                </ModernSignInContainer>
+                <p>
+                  New to World Quest?{" "}
+                  <a
+                    onClick={() => {
+                      setShowSignUp(true);
+                    }}
+                  >
+                    Join Now
+                  </a>
+                </p>
+              </div>
             </div>
           </FormContainer>
         ) : (
           <FormContainer>
-            <div className="div_for_traditional_signin">
-              <p>Welcome to Word Quest</p>
-              <h1>Sign In</h1>
-              <div className="div_for_signin_input">
-                <form onSubmit={formSubmit}>
-                  <Fieldset>
-                    <legend>Email</legend>
-                    <input
-                      type="text"
-                      name="email"
-                      value={input.email}
-                      placeholder="example@gmail.com"
-                      onChange={(e) => {
-                        inputOnChangeFunction(e, "email");
-                      }}
-                    />
-                  </Fieldset>
-                  <Fieldset>
-                    <legend>Password</legend>
-                    <input
-                      type="password"
-                      value={input.password}
-                      placeholder="********"
-                      onChange={(event) => {
-                        inputOnChangeFunction(event, "password");
-                      }}
-                    />
-                  </Fieldset>
-                  <Button className="formSubmitButton" type="submit">
+            <div className="div_for_auth">
+              <div className="intro_div">
+                <p>Welcome to Word Quest</p>
+                <h1>Sign Up</h1>
+              </div>
+              <div className="div_for_form">
+                <div className="div_for_signin_input">
+                  <form onSubmit={formSubmit}>
+                    <Fieldset>
+                      <legend>Email</legend>
+                      <input
+                        type="text"
+                        name="email"
+                        value={input.email}
+                        placeholder="example@gmail.com"
+                        onChange={(e) => {
+                          inputOnChangeFunction(e, "email");
+                        }}
+                      />
+                    </Fieldset>
+                    <Fieldset>
+                      <legend>Password</legend>
+                      <input
+                        type="password"
+                        value={input.password}
+                        placeholder="********"
+                        onChange={(event) => {
+                          inputOnChangeFunction(event, "password");
+                        }}
+                      />
+                    </Fieldset>
+                    <Button type="submit">Sign Up</Button>
+                  </form>
+                </div>
+                <ConnectionContainer>
+                  <hr></hr> <span> or sign up with </span>
+                  <hr></hr>
+                </ConnectionContainer>
+                <ModernSignInContainer>
+                  <button type="light" onClick={signInWithGoogle}>
+                    <img src="../public/Icons/google_logo.svg" />
+                    <span>Google</span>
+                  </button>
+                </ModernSignInContainer>
+                <p>
+                  Already on World Quest?{" "}
+                  <a
+                    onClick={() => {
+                      setShowSignUp(false);
+                    }}
+                  >
                     Sign In
-                  </Button>
-                </form>
+                  </a>
+                </p>
               </div>
             </div>
-            <div className="div_for_modern_sign_in"></div>
           </FormContainer>
         )}
-        <PicContainer></PicContainer>
+        <PicContainer>
+          <img src="/Icons/Logo.png" />
+        </PicContainer>
       </Container>
 
       <ToastContainer
@@ -185,29 +246,67 @@ const Login = () => {
 
 //styled components for button
 const Button = styled.button`
-  min-width: 100%;
+  margin-left: 2px;
   background-color: #3a7ff9;
   color: white;
   border: none;
   padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  &:hover {
+    background-color: #3368d4;
+  }
 `;
 
 //first div
 const Container = styled.div`
   height: 100vh;
   width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
+//div for form/info
+const FormContainer = styled.div`
+  .div_for_auth {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20vh;
+    padding-left: 100px;
+    .div_for_form {
+      width: 60%;
+      padding-left: 100px;
+      p {
+        margin-left: 50px;
+        font-size: 12px;
+      }
+      a {
+        color: #3a7ff9;
+        cursor: pointer;
+        &:hover {
+          color: #3368d4;
+        }
+      }
+      .div_for_signin_input {
+        width: 100%;
+      }
+    }
+  }
+`;
+
+//div for background/pic/logo
+const PicContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-right: 70px;
 `;
-//div for form/info
-const FormContainer = styled.div``;
-
-//div for background/pic/logo
-const PicContainer = styled.div``;
 
 //css for fieldset
 const Fieldset = styled.fieldset`
+  width: 100%;
   margin-bottom: 10px;
   transition: border-color ease 0.3s;
   legend {
@@ -218,6 +317,8 @@ const Fieldset = styled.fieldset`
   input {
     border: none;
     outline: none;
+    display: flex;
+    width: 100%;
   }
 
   &:focus-within {
@@ -228,6 +329,8 @@ const Fieldset = styled.fieldset`
   }
 `;
 const ConnectionContainer = styled.div`
+  min-width: 10%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -238,6 +341,36 @@ const ConnectionContainer = styled.div`
   }
   span {
     font-size: 9px;
+  }
+`;
+
+const ModernSignInContainer = styled.div`
+  min-width: 10%;
+  with: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  img {
+    background-color: white;
+    padding: 5px 5px;
+    border-radius: 5px;
+  }
+  button {
+    ${"" /* background-color: #4285f4; */}
+    background-color: black;
+    cursor: pointer;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px 8px;
+    border-radius: 5px;
+    &:hover {
+      background-color: #333333;
+    }
   }
 `;
 
