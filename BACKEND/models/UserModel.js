@@ -6,7 +6,12 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       default:
-        "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
+        "https://vivureviews.com/wp-content/uploads/2022/08/avatar-vo-danh-3-794x1024.webp",
+    },
+    currentQuest: {
+      type: mongoose.Types.ObjectId,
+      refer: "Quest",
+      default: null,
     },
     username: {
       type: String,
@@ -28,7 +33,7 @@ const userSchema = mongoose.Schema(
     badges: [
       {
         type: mongoose.Types.ObjectId,
-        ref: "badge",
+        ref: "Badge",
       },
     ],
     homeTown: {

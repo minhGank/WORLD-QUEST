@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { toastFunction } from "../../utilities/helperFunction";
+import { toastFunction } from "../../utils/helperFunction";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import validator from "email-validator";
-import {
-  googleSignInAuth,
-  googleSignInProvider,
-} from "../../utilities/firebase";
+import { googleSignInAuth, googleSignInProvider } from "../../utils/firebase";
 import { signInWithPopup } from "firebase/auth";
-
+import { useDispatch } from "react-redux";
+import { userAction } from "../../redux/userSlice";
 //end of import
+
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showSignUp, setShowSignUp] = useState(false);
   const [input, setInput] = useState({ email: "", password: "" });
 
@@ -52,6 +52,7 @@ const Login = () => {
       const validationResult = inputValidation(input.email, input.password);
       if (validationResult == true) {
         //submit sign in form
+        dispatch(userAction.loginStart());
         if (!showSignUp) {
           const res = await axios.post(`http://localhost:8000/auth/login`, {
             email: input.email,
@@ -59,11 +60,13 @@ const Login = () => {
           });
           //there're errors
           if (res.data.success == false) {
+            dispatch(userAction.loginFail());
             return toastFunction("error", res.data.msg);
           }
           //form sign in submit success
           if (res.data.success) {
-            navigate("/");
+            dispatch(userAction.loginSuccess(res.data.user));
+            return navigate("/");
           }
         } else {
           //submit sign up form
@@ -72,19 +75,23 @@ const Login = () => {
             password: input.password,
           });
           if (res.data.success == false) {
+            dispatch(userAction.loginFail());
             return toastFunction("error", res.data.msg);
           } else {
-            showSignUp(false);
+            setShowSignUp(false);
+            toastFunction("success", "Sign Up Succeed");
           }
         }
       }
     } catch (error) {
-      toastFunction("error", error);
+      toastFunction("error", error.message);
+      dispatch(userAction.loginFail());
     }
   };
 
   //function for sign in with google
   const signInWithGoogle = () => {
+    dispatch(userAction.loginStart());
     signInWithPopup(googleSignInAuth, googleSignInProvider)
       .then(async (result) => {
         const res = await axios.post(`http://localhost:8000/auth/googleAuth`, {
@@ -92,12 +99,17 @@ const Login = () => {
         });
         if (res.data.success) {
           toastFunction("success", res.data.msg);
+          dispatch(userAction.loginSuccess(res.data.user));
           navigate("/");
         } else {
+          dispatch(userAction.loginFail());
           return toastFunction("error", res.data.msg);
         }
       })
-      .catch((error) => toastFunction("error", error));
+      .catch((error) => {
+        dispatch(userAction.loginFail());
+        toastFunction("error", error.message);
+      });
   };
 
   return (
@@ -224,7 +236,7 @@ const Login = () => {
           </FormContainer>
         )}
         <PicContainer>
-          <img src="/Icons/Logo.png" />
+          <img src="/Icons/logo_text.png" />
         </PicContainer>
       </Container>
 

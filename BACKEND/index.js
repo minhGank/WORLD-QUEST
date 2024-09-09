@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 
 //import routes
 const authRoute = require("./routes/authRoute");
+const questRoute = require("./routes/questRoute");
 
 //app.use libray and set up library
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(
 
 //app.use routes
 app.use("/auth/", authRoute);
+app.use("quest", questRoute);
 
 app.use((error, req, res, next) => {
   const status = error.status || 500;
