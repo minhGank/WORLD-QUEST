@@ -1,17 +1,18 @@
 const mongoose = require("mongoose");
 
 const challengeSchema = mongoose.Schema({
-  city: {
+  img: {
     type: String,
     required: true,
   },
-  country: {
-    type: String,
-    required: true,
+  quest: {
+    type: mongoose.Types.ObjectId,
+    ref: "Quest",
   },
   title: {
     type: String,
     required: true,
+    text: true,
   },
   description: {
     type: String,

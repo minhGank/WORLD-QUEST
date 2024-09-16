@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const questSchema = mongoose.Schema({
+  img: {
+    type: String,
+    required: true,
+  },
   user: [
     {
       userInfo: {
@@ -15,17 +19,25 @@ const questSchema = mongoose.Schema({
       },
     },
   ],
-  city: {
+  description: {
     type: String,
     required: true,
   },
-  Province: {
+
+  city: {
     type: String,
     required: true,
+    text: true,
+  },
+  province: {
+    type: String,
+    required: true,
+    text: true,
   },
   country: {
     type: String,
     required: true,
+    text: true,
   },
   challenges: [{ type: mongoose.Types.ObjectId, ref: "Challenge" }],
   badges: [{ type: mongoose.Types.ObjectId, ref: "Badge" }],

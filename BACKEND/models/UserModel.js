@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema(
     },
     currentQuest: {
       type: mongoose.Types.ObjectId,
-      refer: "Quest",
+      ref: "Quest",
       default: null,
     },
     username: {

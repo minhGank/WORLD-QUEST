@@ -1,9 +1,10 @@
 const Quest = require("../models/QuestModel");
 
+//this controller is for finding the quest for current quest of user and fetch all the quest for the Home component
 exports.findQuest = async (req, res, next) => {
   try {
     const questId = req.params.questId;
-    const quest = await Quest.findById(questId);
+    const quest = await Quest.findById(questId).populate("challenges");
     const allTheQuest = await Quest.find();
     if (!quest) {
       return res.json({
@@ -15,6 +16,55 @@ exports.findQuest = async (req, res, next) => {
       success: true,
       quest: quest,
       allTheQuest,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//controller when user choose a new quest
+exports.chooseCurrentQuest = async (req, res, next) => {
+  try {
+    const questId = req.params.questId;
+    const quest = await Quest.findById(questId).populate("challenges");
+    if (!quest) {
+      return res.json({
+        success: false,
+        msg: "Can't find this quest",
+      });
+    }
+
+    return res.json({
+      success: true,
+      currentQuest: quest,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createQuest = async (req, res, next) => {
+  try {
+    const { img, country, city, province, description } = req.body;
+    const newQuest = new Quest({ img, country, city, province, description });
+    await newQuest.save();
+    console.log("new quest created");
+    return res.json({
+      success: true,
+      newQuest,
+      msg: "New Quest Created",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getAllQuest = async (req, res, next) => {
+  try {
+    const allQuest = await Quest.find();
+    return res.json({
+      success: true,
+      allQuest,
     });
   } catch (error) {
     next(error);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastFunction } from "../../utils/helperFunction";
 import styled from "styled-components";
@@ -272,8 +272,10 @@ const Button = styled.button`
 
 //first div
 const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
 `;
@@ -314,6 +316,7 @@ const PicContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding-right: 70px;
+  margin-top: 120px;
 `;
 
 //css for fieldset
