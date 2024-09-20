@@ -5,7 +5,6 @@ exports.findQuest = async (req, res, next) => {
   try {
     const questId = req.params.questId;
     const quest = await Quest.findById(questId).populate("challenges");
-    const allTheQuest = await Quest.find();
     if (!quest) {
       return res.json({
         success: false,
@@ -15,7 +14,6 @@ exports.findQuest = async (req, res, next) => {
     return res.json({
       success: true,
       quest: quest,
-      allTheQuest,
     });
   } catch (error) {
     next(error);
@@ -66,6 +64,26 @@ exports.getAllQuest = async (req, res, next) => {
       success: true,
       allQuest,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.addImgsToQuestGallery = async (req, res, next) => {
+  try {
+    const { imgs, password, questId } = req.body;
+    if (password != 23032004) {
+      return res.json({ success: false, msg: "You have password to do this" });
+    }
+    const quest = await Quest.findById(questId);
+    if (!quest) {
+      return res.json({ success: false, msg: "Quest not found" });
+    }
+    imgs.forEach((img) => {
+      quest.arrayOfImg.push(img);
+    });
+    await quest.save();
+    return res.json({ success: true, quest });
   } catch (error) {
     next(error);
   }

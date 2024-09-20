@@ -3,6 +3,9 @@ import Login from "./pages/Login.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
 import RootLayout from "./pages/RootLayout.jsx";
+import Quest from "./pages/Quest.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -17,12 +20,17 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      { path: "/quest_location/:questId", element: <Quest /> },
     ],
   },
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

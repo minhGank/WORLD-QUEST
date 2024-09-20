@@ -17,9 +17,12 @@ const SearchResultList = ({ result }) => {
 export default SearchResultList;
 
 const Container = styled.div`
-  min-width: 35%;
+  width: 35%;
   background-color: white;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 0px 8px #ddd;
+  overflow-y: scroll;
+  border-radius: 10px;
+  margin-top: 1rem;
 `;

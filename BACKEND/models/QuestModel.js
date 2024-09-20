@@ -5,6 +5,11 @@ const questSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  arrayOfImg: [
+    {
+      type: String,
+    },
+  ],
   user: [
     {
       userInfo: {

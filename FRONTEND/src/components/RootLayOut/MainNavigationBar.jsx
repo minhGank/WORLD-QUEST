@@ -46,7 +46,7 @@ const MainNavigationBar = () => {
     <NavigationBar>
       <Link to="/" className="div_for_logo">
         <img src="/Icons/logo.png" />
-        <h3>World Quest</h3>
+        <h3>WorldQuest</h3>
       </Link>
 
       {/* main nav bar */}
@@ -98,13 +98,16 @@ const NavigationBar = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
+
     h3 {
-      font-size: 20px;
+      font-size: 23px;
       color: black;
       font-weight: 800;
+      margin-left: -8px;
     }
     img {
-      width: 50px;
+      width: 45px;
+      height: 45px;
     }
   }
 

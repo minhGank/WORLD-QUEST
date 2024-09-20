@@ -44,7 +44,6 @@ exports.login = async (req, res, next) => {
         msg: "Email or Password is incorrect",
       });
     }
-
     //end of validation, login success
     const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET, {
       expiresIn: "7d",
