@@ -1,7 +1,22 @@
 const mongoose = require("mongoose");
 
 const challengeSchema = mongoose.Schema({
-  img: {
+  averageReviewStar: {
+    type: Number,
+  },
+  reviewCount: {
+    type: Number,
+  },
+  imgThumbnail: {
+    type: String,
+    required: true,
+  },
+  imgs: [
+    {
+      type: String,
+    },
+  ],
+  address: {
     type: String,
     required: true,
   },
@@ -32,6 +47,15 @@ const challengeSchema = mongoose.Schema({
       },
       img: {
         type: String,
+      },
+      review: {
+        reviewStar: {
+          type: Number,
+          enum: [1, 2, 3, 4, 5],
+        },
+        reviewText: {
+          type: String,
+        },
       },
       date: {
         type: Date,

@@ -5,6 +5,7 @@ import React from "react";
 import RootLayout from "./pages/RootLayout.jsx";
 import Quest from "./pages/Quest.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ChallengePage from "./pages/ChallengePage.jsx";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       { path: "/quest_location/:questId", element: <Quest /> },
+      { path: "/adventure/:challengeId", element: <ChallengePage /> },
     ],
   },
 ]);

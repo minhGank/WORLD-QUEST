@@ -3,16 +3,22 @@ const Quest = require("../models/QuestModel");
 
 exports.createChallenge = async (req, res, next) => {
   try {
-    const { img, title, description, point, questId } = req.body;
-    if (!img || !title || !description || !point || !questId) {
+    const { imgs, title, description, point, questId, address, imgThumbnail } =
+      req.body;
+    if (
+      (!imgs || !title || !description || !point || !questId || !address,
+      !imgThumbnail)
+    ) {
       return res.status(400).json({ msg: "All fields are required" });
     }
     const newChallenge = new Challenge({
-      img,
+      imgThumbnail,
+      imgs,
       title,
       description,
       point,
       questId,
+      address,
     });
 
     const quest = await Quest.findById(questId);
@@ -25,6 +31,25 @@ exports.createChallenge = async (req, res, next) => {
     await newChallenge.save();
     return res.json({
       newChallenge,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.findChallenge = async (req, res, next) => {
+  try {
+    const { challengeId } = req.params.challengeId;
+    const challenge = await Challenge.findById(challengeId);
+    if (!challenge) {
+      return res.json({
+        success: false,
+        msg: "Can't find this adventure, please try again later",
+      });
+    }
+    return res.json({
+      success: true,
+      challenge,
     });
   } catch (error) {
     next(error);

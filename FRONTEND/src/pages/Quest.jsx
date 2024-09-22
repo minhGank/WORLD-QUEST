@@ -11,6 +11,7 @@ import BarLoader from "react-spinners/BarLoader";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { IoIosArrowDown } from "react-icons/io";
+import ChallengeShortcut from "../components/Quest/ChallengeShortcut";
 
 const Quest = () => {
   ////////////////////////////////////////////////////
@@ -98,9 +99,11 @@ const Quest = () => {
   // const dispatch = useDispatch();
 
   //////////////////////////////////////////////////////////////
+  //take out the questId for future quest fetch
   const { questId } = useParams();
-
+  //useState for selecting the type of adventure
   const [adventureType, setAdventureType] = useState(1);
+
   //create function to find the quest
   const fetchQuestDataFunction = async (questId) => {
     try {
@@ -118,7 +121,7 @@ const Quest = () => {
     }
   };
 
-  //react query
+  //react query for fetching the quest
   const {
     data: quest,
     isLoading,
@@ -129,7 +132,8 @@ const Quest = () => {
     queryFn: () => fetchQuestDataFunction(questId),
     staleTime: 5000,
   });
-  //if react query finds
+
+  //if react query is loading
   if (isLoading) {
     return (
       <Container>
@@ -144,6 +148,7 @@ const Quest = () => {
     );
   }
 
+  //if there's an error in the quest fetch
   if (isError) {
     <Container>
       <div className="div_for_showing_error">
@@ -151,15 +156,19 @@ const Quest = () => {
       </div>
     </Container>;
   }
+
+  //create the img gallery for quest by using the package
   let imagesForGalleryArray;
   if (quest?.arrayOfImg && Array.isArray(quest.arrayOfImg)) {
     imagesForGalleryArray = quest.arrayOfImg.map((img) => ({
       original: img,
     }));
-
-    console.log(imagesForGalleryArray);
+    // console.log(imagesForGalleryArray);
   }
-
+  console.log(
+    "this is the console log of all the challenges shortcut inside quest",
+    quest.challenges
+  );
   return (
     <>
       <Container>
@@ -205,7 +214,20 @@ const Quest = () => {
             <div className="filter_button">Filter</div>
             <IoIosArrowDown className="arrow_down_icon_for_filter_button" />
           </div>
-          <div className="div_for_challenges"></div>
+          <div className="div_for_challenges">
+            {quest.challenges.length > 0 ? (
+              quest.challenges.map((challenge) => (
+                <>
+                  <ChallengeShortcut challenge={challenge} />
+                  <ChallengeShortcut challenge={challenge} />
+                </>
+              ))
+            ) : (
+              <p>
+                This quest is unavailable in the moment, please comeback later.
+              </p>
+            )}
+          </div>
         </div>
       </Container>
       <ToastContainer
@@ -325,6 +347,14 @@ const Container = styled.div`
       .arrow_down_icon_for_filter_button {
         margin-top: 3.5px;
       }
+    }
+    .div_for_challenges {
+      margin: 15px 0px;
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
     }
   }
 `;
