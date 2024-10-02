@@ -150,11 +150,14 @@ const Quest = () => {
 
   //if there's an error in the quest fetch
   if (isError) {
-    <Container>
-      <div className="div_for_showing_error">
-        <h1>There's error, please come back later</h1>
-      </div>
-    </Container>;
+    console.log(error);
+    return (
+      <Container>
+        <div className="div_for_showing_error">
+          <h1>There's error, please come back later</h1>
+        </div>
+      </Container>
+    );
   }
 
   //create the img gallery for quest by using the package
@@ -217,10 +220,7 @@ const Quest = () => {
           <div className="div_for_challenges">
             {quest.challenges.length > 0 ? (
               quest.challenges.map((challenge) => (
-                <>
-                  <ChallengeShortcut challenge={challenge} />
-                  <ChallengeShortcut challenge={challenge} />
-                </>
+                <ChallengeShortcut challenge={challenge} />
               ))
             ) : (
               <p>

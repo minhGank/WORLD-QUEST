@@ -49,14 +49,14 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 0px;
+  padding: 10px 0px 22px 0;
   width: 100%;
   border-radius: 6px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   border: solid #d3d3d3;
   transition: 0.3s ease;
   &:hover {
-    border-color: black;
+    border-color: grey;
     img {
       opacity: 0.8;
     }
@@ -84,6 +84,7 @@ const Container = styled.div`
       align-items: start;
       justify-content: center;
       flex-direction: column;
+
       p {
         margin: 0 0;
       }

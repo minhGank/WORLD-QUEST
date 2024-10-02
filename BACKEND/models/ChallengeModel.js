@@ -1,12 +1,20 @@
 const mongoose = require("mongoose");
 
 const challengeSchema = mongoose.Schema({
+  websiteUrl: {
+    type: String,
+  },
   averageReviewStar: {
     type: Number,
+  },
+  openHour: {
+    type: String,
+    required: true,
   },
   reviewCount: {
     type: Number,
   },
+
   imgThumbnail: {
     type: String,
     required: true,
@@ -17,10 +25,16 @@ const challengeSchema = mongoose.Schema({
     },
   ],
   address: {
-    type: String,
-    required: true,
+    googleUrl: {
+      type: String,
+      required: true,
+    },
+    actualAddress: {
+      type: String,
+      required: true,
+    },
   },
-  quest: {
+  questId: {
     type: mongoose.Types.ObjectId,
     ref: "Quest",
   },

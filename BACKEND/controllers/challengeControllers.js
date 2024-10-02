@@ -39,8 +39,8 @@ exports.createChallenge = async (req, res, next) => {
 
 exports.findChallenge = async (req, res, next) => {
   try {
-    const { challengeId } = req.params.challengeId;
-    const challenge = await Challenge.findById(challengeId);
+    const challengeId = req.params.challengeId;
+    const challenge = await Challenge.findById(challengeId).populate("questId");
     if (!challenge) {
       return res.json({
         success: false,
