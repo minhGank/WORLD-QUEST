@@ -23,6 +23,9 @@ const CompletionDetailPopup = ({ setCompletionDetailPopup, challenge }) => {
         </div>
         <div className="popup_div_upload_pic_button">
           <div className="upload_pic_button">Upload images/videos</div>
+          <p>
+            {"(uploading pictures will add +1 point toward this city quest.)"}
+          </p>
         </div>
       </div>
     </Container>
@@ -93,8 +96,14 @@ const Container = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       margin-top: 20px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      p {
+        margin: 10px 0 0 0;
+        font-size: 11px;
+        width: 30%;
+      }
       .upload_pic_button {
         border: #3a7ff9 solid;
         padding: 10px;

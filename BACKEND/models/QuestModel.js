@@ -10,20 +10,20 @@ const questSchema = mongoose.Schema({
       type: String,
     },
   ],
-  user: [
-    {
-      userInfo: {
-        type: mongoose.Types.ObjectId,
-        required: true,
-        ref: "User",
-      },
-      point: {
-        type: Number,
-        required: true,
-        default: 0,
-      },
-    },
-  ],
+  // user: [
+  //   {
+  //     userInfo: {
+  //       type: mongoose.Types.ObjectId,
+  //       required: true,
+  //       ref: "User",
+  //     },
+  //     point: {
+  //       type: Number,
+  //       required: true,
+  //       default: 0,
+  //     },
+  //   },
+  // ],
   description: {
     type: String,
     required: true,

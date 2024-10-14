@@ -62,15 +62,7 @@ const challengeSchema = mongoose.Schema({
       img: {
         type: String,
       },
-      review: {
-        reviewStar: {
-          type: Number,
-          enum: [1, 2, 3, 4, 5],
-        },
-        reviewText: {
-          type: String,
-        },
-      },
+
       date: {
         type: Date,
         required: true,

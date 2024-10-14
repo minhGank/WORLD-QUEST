@@ -14,11 +14,13 @@ import { IoLocationOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import CompletionDetailPopup from "../components/Challenge/CompletionDetailPopup";
+import ReviewSection from "../components/Challenge/ReviewSection";
 
 const ChallengePage = () => {
   const { currentUser } = useSelector((state) => (state = state.user));
   const { challengeId } = useParams();
   const [completionDetailPopup, setCompletionDetailPopup] = useState(false);
+  const [writingReviewPopup, setWritingReviewPopup] = useState(false);
   //create fetch challenge function
   const fetchChallengeFunction = async (challengeId) => {
     try {
@@ -169,7 +171,11 @@ const ChallengePage = () => {
           </div>
         </div>
       </div>
-      <div className="user_review_div"></div>
+      {/* <div className="user_review_div">
+        <h4>Your Review</h4>
+        <div className="button_to_write_review">Write your review</div>
+      </div> */}
+      <ReviewSection />
       {completionDetailPopup && (
         <CompletionDetailPopup
           setCompletionDetailPopup={setCompletionDetailPopup}
@@ -353,6 +359,20 @@ const Container = styled.div`
           background-color: #a0a0a0;
         }
       }
+    }
+  }
+  .user_review_div {
+    width: 80%;
+    h4 {
+      font-size: 23px;
+      margin: 50px 0 10px 5px;
+    }
+    .button_to_write_review {
+      padding: 15px;
+      border-radius: 30px;
+      border: solid black;
+      width: max-content;
+      cursor: pointer;
     }
   }
 `;
