@@ -82,7 +82,13 @@ const MainNavigationBar = () => {
         <div className="div_for_using_region_and_languages">
           <LanguageIcon className="div_for_language_icon" />
         </div>
-        <img src={currentUser?.img} />
+        {currentUser ? (
+          <img src={currentUser?.img} />
+        ) : (
+          <Link to="/login" className="login_button">
+            Login
+          </Link>
+        )}
       </div>
     </NavigationBar>
   );
@@ -150,6 +156,19 @@ const NavigationBar = styled.nav`
       &:hover {
         background-color: #d6d6d6;
       }
+    }
+    .login_button {
+      border: solid 2px black;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      margin-bottom: 2px;
+      font-weight: 500;
+      text-decoration: none;
+      color: black;
     }
   }
 `;

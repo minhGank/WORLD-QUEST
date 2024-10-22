@@ -2,11 +2,11 @@ import styled from "styled-components";
 import ShowingOverallReview from "./ReviewSection/ShowingOverallReview";
 import ShowingAllTheReview from "./ReviewSection/ShowingAllTheReview";
 
-const ReviewSection = () => {
+const ReviewSection = ({ setWritingReviewPopup }) => {
   return (
     <Container>
       <h3>User reviews & ratings</h3>
-      <ShowingOverallReview />
+      <ShowingOverallReview setWritingReviewPopup={setWritingReviewPopup} />
       <hr></hr>
       <ShowingAllTheReview />
     </Container>

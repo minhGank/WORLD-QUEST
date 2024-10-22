@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
+import EachReview from "./EachReview";
 
 const ShowingAllTheReview = () => {
   const [filterType, setFilterType] = useState(2);
-  const [filterTypePopUp, setFilterTypePopUp] = useState(true);
+  const [filterTypePopUp, setFilterTypePopUp] = useState(false);
   return (
     <Container>
       <div
@@ -57,6 +58,12 @@ const ShowingAllTheReview = () => {
           </span>
         </div>
       )}
+      <div className="each_review_div">
+        <EachReview />
+        <EachReview />
+        <EachReview />
+        <EachReview />
+      </div>
     </Container>
   );
 };

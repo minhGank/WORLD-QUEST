@@ -10,11 +10,11 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { FiShare } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
-import { IoLocationOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import CompletionDetailPopup from "../components/Challenge/CompletionDetailPopup";
 import ReviewSection from "../components/Challenge/ReviewSection";
+import ReviewPopup from "../components/Challenge/ReviewPopup";
 
 const ChallengePage = () => {
   const { currentUser } = useSelector((state) => (state = state.user));
@@ -175,7 +175,10 @@ const ChallengePage = () => {
         <h4>Your Review</h4>
         <div className="button_to_write_review">Write your review</div>
       </div> */}
-      <ReviewSection />
+      <ReviewSection setWritingReviewPopup={setWritingReviewPopup} />
+      {writingReviewPopup && (
+        <ReviewPopup setWritingReviewPopup={setWritingReviewPopup} />
+      )}
       {completionDetailPopup && (
         <CompletionDetailPopup
           setCompletionDetailPopup={setCompletionDetailPopup}

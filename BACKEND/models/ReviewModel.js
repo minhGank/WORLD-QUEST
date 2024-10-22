@@ -1,13 +1,27 @@
 const mongoose = require("mongoose");
 
 const reviewSchema = mongoose.Schema({
-  questId: {
+  userId: {
     type: mongoose.Types.ObjectId,
     ref: "Quest",
     required: true,
   },
+  whenDidYouGo: {
+    type: Date,
+    required: true,
+  },
+  challengeId: {
+    type: mongoose.Types.ObjectId,
+    ref: "Challenge",
+    required: true,
+  },
+  reviewTitle: {
+    type: String,
+    required: true,
+  },
   reviewText: {
     type: String,
+    required: true,
   },
   startRating: {
     type: Number,

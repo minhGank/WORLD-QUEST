@@ -3,7 +3,7 @@ import { Rate } from "antd";
 import { useState } from "react";
 import ShowingEachStarRating from "./ShowingEachStarRating";
 
-const ShowingOverallReview = () => {
+const ShowingOverallReview = ({ setWritingReviewPopup }) => {
   const [overallRating, setOverrallRating] = useState(4.6);
 
   return (
@@ -21,7 +21,12 @@ const ShowingOverallReview = () => {
         <ShowingEachStarRating star={1} percentage={25} />
       </div>
       <div className="div_to_display_button_for_user_to_review">
-        <div className="button_for_user_to_write_review">Write a review</div>
+        <div
+          onClick={() => setWritingReviewPopup(true)}
+          className="button_for_user_to_write_review"
+        >
+          Write a review
+        </div>
         <div className="button_for_user_to_see_all_the_review">
           See all reviews
         </div>
